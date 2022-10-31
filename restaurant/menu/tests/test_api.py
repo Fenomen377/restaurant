@@ -8,8 +8,8 @@ from menu.serializers import CategorySerializer
 
 class CategoryTestCase(APITestCase):
     def test_get(self):
-        category_1 = Category.objects.create(name='meat')
-        category_2 = Category.objects.create(name='pechka')
+        category_1 = Category.objects.create(name='Напитки')
+        category_2 = Category.objects.create(name='Блюда из печи')
         ab = category_2
         ac = category_1
         url = reverse('category-list')
@@ -21,9 +21,11 @@ class CategoryTestCase(APITestCase):
 
 # class MenuTestCase(APITestCase, CategoryTestCase):
 #     def test_get(self):
-#         menu_1 = Menu.objects.create(name='hinkali', description='qwerty', photo='qwerty', price=390, rating=4.8,
-#                                      weight=390, category=category_1)
-#         menu_2 = Menu.objects.create(name='hachapuri', description='qwerty', photo='qwerty', price=490, rating=4.8,
+#         menu_1 = Menu.objects.create(name='Компот Айва 250мл', description='компот из айвы',
+#                                      photo='qwerty', price=390, rating=4.8,
+#                                      weight=250, category=category_1)
+#         menu_2 = Menu.objects.create(name='хачапури по-мегрельски', description='qwerty',
+#                                      photo='qwerty', price=490, rating=4.8,
 #                                      weight=500, category=category_2)
 #         url = reverse('menu-list')
 #         response = self.client.get(url)
