@@ -16,17 +16,24 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import SimpleRouter
 
-from menu.views import *
+from menu.views import CategoryViewSet, MenuViewSet, pageNotFound
 from retaurant import settings
+
+
+router = SimpleRouter()
+
+router.register(r'menu', MenuViewSet)
+router.register(r'category', CategoryViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('menu.urls')),
 
 ]
+urlpatterns += router.urls
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = pageNotFound

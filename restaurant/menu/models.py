@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 
 
-class FoodAndDrinks(models.Model):
+class Menu(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название')
     description = models.TextField(blank=True, verbose_name='Описание')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Фото')
