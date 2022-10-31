@@ -1,4 +1,4 @@
-"""retaurant URL Configuration
+"""restaurant URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -19,7 +19,7 @@ from django.urls import path, include
 from rest_framework.routers import SimpleRouter
 
 from menu.views import CategoryViewSet, MenuViewSet, pageNotFound
-from retaurant import settings
+from restaurant import settings
 
 
 router = SimpleRouter()

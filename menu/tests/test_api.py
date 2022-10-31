@@ -10,8 +10,6 @@ class CategoryTestCase(APITestCase):
     def test_get(self):
         category_1 = Category.objects.create(name='Напитки')
         category_2 = Category.objects.create(name='Блюда из печи')
-        ab = category_2
-        ac = category_1
         url = reverse('category-list')
         response = self.client.get(url)
         serializer_data = CategorySerializer([category_1, category_2], many=True).data
