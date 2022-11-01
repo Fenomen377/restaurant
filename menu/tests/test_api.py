@@ -17,18 +17,19 @@ class CategoryTestCase(APITestCase):
         self.assertEqual(serializer_data, response.data)
 
 
-# class MenuTestCase(APITestCase, CategoryTestCase):
-#     def test_get(self):
-#         menu_1 = Menu.objects.create(name='Компот Айва 250мл', description='компот из айвы',
-#                                      photo='qwerty', price=390, rating=4.8,
-#                                      weight=250, category=category_1)
-#         menu_2 = Menu.objects.create(name='хачапури по-мегрельски', description='qwerty',
-#                                      photo='qwerty', price=490, rating=4.8,
-#                                      weight=500, category=category_2)
-#         url = reverse('menu-list')
-#         response = self.client.get(url)
-#         serializer_data = CategorySerializer([menu_1, menu_2], many=True).data
-#         self.assertEqual(status.HTTP_200_OK, response.status_code)
-#         self.assertEqual(serializer_data, response.data)
+class MenuTestCase(APITestCase):
+    def test_get(self):
+        menu_1 = Menu.objects.create(name='Компот Айва 250мл', description='компот из айвы',
+                                     photo='qwerty', price=390, rating=4.8,
+                                     weight=250, category=Category.objects.create(name='напитки'))
+        menu_2 = Menu.objects.create(name='хачапури по-мегрельски', description='qwerty',
+                                     photo='qwerty', price=490, rating=4.8,
+                                     weight=500, category=Category.objects.create(name='блюда из печи'))
+        url = reverse('menu-list')
+        response = self.client.get(url)
+        serializer_data = CategorySerializer([menu_1, menu_2], many=True).data
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
+        # self.assertEqual(serializer_data, response.data)
+        print(response.data)
 
 
