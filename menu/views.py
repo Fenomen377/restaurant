@@ -1,10 +1,23 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 
 from menu.models import *
 from menu.permissions import IsAdminOrReadOnly
 from menu.serializers import *
+
+
+class MenuViewSetPagination(PageNumberPagination):
+    page_size = 10
+    page_query_param = 'page_size'
+    max_page_size = 20
+
+
+class CategoryViewSetPagination(PageNumberPagination):
+    page_size = 10
+    page_query_param = 'page_size'
+    max_page_size = 20
 
 
 class MenuViewSet(ModelViewSet):
