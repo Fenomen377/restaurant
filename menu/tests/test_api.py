@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from menu.models import Menu, Category
-from menu.serializers import CategorySerializer
+from menu.serializers import CategorySerializer, MenuSerializer
 
 
 class CategoryTestCase(APITestCase):
@@ -15,6 +15,7 @@ class CategoryTestCase(APITestCase):
         serializer_data = CategorySerializer([category_1, category_2], many=True).data
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(serializer_data, response.data)
+        print(serializer_data, response.data)
 
 
 class MenuTestCase(APITestCase):
@@ -27,9 +28,9 @@ class MenuTestCase(APITestCase):
                                      weight=500, category=Category.objects.create(name='блюда из печи'))
         url = reverse('menu-list')
         response = self.client.get(url)
-        serializer_data = CategorySerializer([menu_1, menu_2], many=True).data
+        serializer_data = MenuSerializer([menu_1, menu_2], many=True).data
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        # self.assertEqual(serializer_data, response.data)
-        print(response.data)
+        self.assertEqual(serializer_data, response.data)
+
 
 

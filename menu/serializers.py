@@ -6,7 +6,7 @@ from menu.models import Menu, Category
 class MenuSerializer(ModelSerializer):
     class Meta:
         model = Menu
-        fields = '__all__'
+        fields = ('id', 'name', 'description', 'price', 'rating', 'weight', 'category')
 
 
 class CategorySerializer(ModelSerializer):
