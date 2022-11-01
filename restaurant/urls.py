@@ -29,6 +29,7 @@ router.register(r'category', CategoryViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('menu/drf-auth/', include('rest_framework.urls')),
 
 ]
 urlpatterns += router.urls
