@@ -11,7 +11,6 @@ class CategoryTestCase(APITestCase):
         self.category_1 = Category.objects.create(name='Напитки')
         self.category_2 = Category.objects.create(name='Блюда из печи')
 
-
     def test_get(self):
         url = reverse('category-list')
         response = self.client.get(url)

@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from menu.models import *
@@ -27,11 +28,17 @@ class MenuViewSet(ModelViewSet):
     filterset_fields = ['category', 'price']
     permission_classes = [IsAdminOrReadOnly]
 
+    def get_paginated_response(self, data):
+        return Response(data)
+
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAdminOrReadOnly]
+
+    def get_paginated_response(self, data):
+        return Response(data)
 
 
 # mainmenu = [{'title': 'Легенда', 'url_name': 'menu'},
