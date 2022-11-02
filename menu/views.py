@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotFound
+from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -52,3 +53,11 @@ class CategoryViewSet(ModelViewSet):
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+
+
+def index(request):
+    return render(request, 'menu/index.html')
+
+
+def auth(request):
+    return render(request, 'menu/oauth.html')

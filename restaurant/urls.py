@@ -15,21 +15,24 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework.routers import SimpleRouter
 
-from menu.views import CategoryViewSet, MenuViewSet, pageNotFound
+from menu.views import CategoryViewSet, MenuViewSet, pageNotFound, auth
 from restaurant import settings
 
 
 router = SimpleRouter()
 
-router.register(r'menu', MenuViewSet)
-router.register(r'category', CategoryViewSet)
+router.register(r'api/menu', MenuViewSet)
+router.register(r'api/category', CategoryViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('menu/drf-auth/', include('rest_framework.urls')),
+    path('api/menu/drf-auth/', include('rest_framework.urls')),
+    path('', include('social_django.urls')),
+    path('auth/', auth),
+
 
 ]
 urlpatterns += router.urls
