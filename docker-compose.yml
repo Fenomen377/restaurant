@@ -3,7 +3,7 @@ services:
   db :
     image: postgres
     volumes:
-      - data:/varlib/postgresql/data
+      - data:/var/lib/postgresql/data
     env_file:
       - ./.env
     networks:

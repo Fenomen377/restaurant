@@ -1,6 +1,14 @@
 {% extends 'menu/base.html' %}
 
-{% block description %}
-<h1>{{ title }}</h1>
-<p>Содержимое главной страницы</p>
+{% block content %}
+<ul class="list-articles">
+{% for p in posts %}
+    <li>
+        <h3>{{ p.name }}</h3>
+        <p>{{ p.description }}</p>
+        <p>{{ p.price }}р / {{ p.weight }}гр</p>
+        <div class="clear"></div>
+    </li>
+{% endfor %}
+</ul>
 {% endblock %}

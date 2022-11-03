@@ -42,13 +42,15 @@ class CategoryViewSet(ModelViewSet):
         return Response(data)
 
 
-# mainmenu = [{'title': 'Легенда', 'url_name': 'menu'},
-#         {'title': 'Меню', 'url_name': 'menu'},
-#         {'title': 'Забронировать стол', 'url_name': ''},
-#         {'title': 'Контакты', 'url_name': 'contact'},
-#         {'title': 'Отзывы', 'url_name': 'login'},
-#         {'title': 'Войти', 'url_name': 'login'}
-#         ]
+# menu = ['Легенда', 'Меню', 'Забронировать стол', 'Контакты', 'Отзывы', 'Войти']
+
+menu = [{'title': "Легенда", 'url_name': 'legends'},
+        {'title': "Меню", 'url_name': 'menu'},
+        {'title': "Забронировать стол", 'url_name': 'table_reservation'},
+        {'title': "Контакты", 'url_name': 'contacts'},
+        {'title': "Отзывы", 'url_name': 'reviews'},
+        {'title': "Войти", 'url_name': 'auth'}
+        ]
 
 
 def pageNotFound(request, exception):
@@ -56,8 +58,48 @@ def pageNotFound(request, exception):
 
 
 def index(request):
-    return render(request, 'menu/index.html')
+    posts = Menu.objects.all()
+    context = {
+        'posts': posts,
+        'menu': menu,
+        'title': 'Главная - ГамарджобаГенацвале'
+    }
+    return render(request, 'menu/index.html', context=context)
 
 
 def auth(request):
-    return render(request, 'menu/oauth.html')
+    return render(request, 'menu/oauth.html', {'title': 'Авторизация'})
+
+
+def legends(request):
+    context ={
+        'menu': menu,
+        'title': 'Легенда'
+    }
+    return render(request, 'menu/legends.html', context=context)
+
+
+def menu(request):
+    posts = Menu.objects.all()
+    context = {
+        'posts': posts,
+        'menu': menu,
+        'title': 'Меню'
+    }
+    return render(request, 'menu/index.html', context=context)
+
+
+def contacts(request):
+    return HttpResponse('Контакты')
+
+
+def reviews(request):
+    return HttpResponse('Отзывы')
+
+
+def table_reservation(request):
+    return HttpResponse('Бронирование столика')
+
+
+
+

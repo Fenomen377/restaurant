@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework.routers import SimpleRouter
 
-from menu.views import CategoryViewSet, MenuViewSet, pageNotFound, auth
+from menu.views import *
 from restaurant import settings
 
 
@@ -31,10 +31,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/menu/drf-auth/', include('rest_framework.urls')),
     path('', include('social_django.urls')),
-    path('auth/', auth),
-
-
-]
+    path('', include('menu.urls')),
+    ]
 urlpatterns += router.urls
 
 # if settings.DEBUG:
