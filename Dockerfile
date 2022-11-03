@@ -4,6 +4,8 @@ ENV PYTHONUNBUFFERED=1
 # Set the application directory
 WORKDIR /restaurant
 COPY requirements.txt /restaurant/
+COPY entrypoint.sh /restaurant/
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . /restaurant/
+
 
