@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -53,16 +54,47 @@ def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
 
 
-def index(request):
-    posts = Menu.objects.all()
+class MenuHome(ListView):
+    model = Menu
+    template_name = 'menu/index.html'
+    context_object_name = 'posts'
 
-    context = {
-        'posts': posts,
-        'menu': menu,
-        'title': 'Главная - ГамарджобаГенацвале',
-        'category_selected': 0,
-    }
-    return render(request, 'menu/index.html', context=context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Главная страница - ГамарджобаГенацвале'
+        context['category_selected'] = 0
+        return context
+
+
+class ShowCategory(ListView):
+    model = Menu
+    template_name = 'menu/index.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        return Menu.objects.filter(category__id=self.kwargs['category_id'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Категория - ' + str(context['posts'][0].category)
+        context['category_selected'] = context['posts'][0].category_id
+        return context
+
+
+class ShowPost(DetailView):
+    model = Menu
+    template_name = 'menu/post.html'
+    pk_url_kwarg = 'post_id'
+    context_object_name = 'post'
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = context['post']
+        return context
 
 
 def auth(request):
@@ -78,40 +110,26 @@ def legends(request):
 
 
 def contacts(request):
-    return HttpResponse('Контакты')
+    context = {
+        'menu': menu,
+        'title': 'Контакты'
+    }
+    return render(request, 'menu/contacts.html', context=context)
 
 
 def reviews(request):
-    return HttpResponse('Отзывы')
+    context = {
+        'menu': menu,
+        'title': 'Отзывы'
+    }
+    return render(request, 'menu/reviews.html', context=context)
 
 
 def table_reservation(request):
     return HttpResponse('Бронирование столика')
 
 
-def show_post(request, post_id):
-    post = get_object_or_404(Menu, pk=post_id)
 
-    context = {
-        'post': post,
-        'menu': menu,
-        'title': post.name,
-        'category_selected': post.category_id,
-    }
-    return render(request, 'menu/post.html', context=context)
-
-
-def show_category(request, category_id):
-    posts = Menu.objects.filter(category_id=category_id)
-
-    context = {
-        'posts': posts,
-
-        'menu': menu,
-        'title': 'Отображение по категориям',
-        'category_selected': category_id,
-    }
-    return render(request, 'menu/index.html', context=context)
 
 
 
