@@ -55,11 +55,9 @@ def pageNotFound(request, exception):
 
 def index(request):
     posts = Menu.objects.all()
-    categorys = Category.objects.all()
 
     context = {
         'posts': posts,
-        'categorys': categorys,
         'menu': menu,
         'title': 'Главная - ГамарджобаГенацвале',
         'category_selected': 0,
@@ -97,11 +95,10 @@ def show_post(request, post_id):
 
 def show_category(request, category_id):
     posts = Menu.objects.filter(category_id=category_id)
-    categorys = Category.objects.all()
 
     context = {
         'posts': posts,
-        'categorys': categorys,
+
         'menu': menu,
         'title': 'Отображение по категориям',
         'category_selected': category_id,

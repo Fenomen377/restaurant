@@ -1,3 +1,5 @@
+{% load menu_tags %}
+{% load menu_tags %}
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -38,14 +40,7 @@
         {% else %}
         <li><a href="{% url 'home' %}">Разделы меню</a></li>
         {% endif %}
-
-    {% for c in categorys %}
-    {% if c.pk == category_selected %}
-    <li class="selected">{{ c.name }}</li>
-    {% else %}
-    <li><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
-    {% endif %}
-    {% endfor %}
+        {% show_categories category_selected=category_selected%}
 	</ul>
 </td>
 <!-- Конец Sidebar'а -->
