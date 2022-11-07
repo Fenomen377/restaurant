@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -90,7 +90,15 @@ def table_reservation(request):
 
 
 def show_post(request, post_id):
-    return HttpResponse(f'Отображение блюда с id={post_id}')
+    post = get_object_or_404(Menu, pk=post_id)
+
+    context = {
+        'post': post,
+        'menu': menu,
+        'title': post.name,
+        'category_selected': post.category_id,
+    }
+    return render(request, 'menu/post.html', context=context)
 
 
 def show_category(request, category_id):
