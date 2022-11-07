@@ -98,7 +98,11 @@ class ShowPost(DetailView):
 
 
 def auth(request):
-    return render(request, 'menu/oauth.html', {'title': 'Авторизация'})
+    context = {
+        'menu': menu,
+        'title': 'Авторизация'
+    }
+    return render(request, 'menu/oauth.html', context=context)
 
 
 def legends(request):
@@ -126,7 +130,11 @@ def reviews(request):
 
 
 def table_reservation(request):
-    return HttpResponse('Бронирование столика')
+    context = {
+        'menu': menu,
+        'title': 'Бронирование столика'
+    }
+    return render(request, 'menu/table_reservation.html', context=context)
 
 
 
