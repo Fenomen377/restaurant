@@ -42,15 +42,11 @@ class CategoryViewSet(ModelViewSet):
         return Response(data)
 
 
-# menu = ['Легенда', 'Меню', 'Забронировать стол', 'Контакты', 'Отзывы', 'Войти']
-
 menu = [{'title': "Легенда", 'url_name': 'legends'},
-        {'title': "Меню", 'url_name': 'menu'},
         {'title': "Забронировать стол", 'url_name': 'table_reservation'},
         {'title': "Контакты", 'url_name': 'contacts'},
         {'title': "Отзывы", 'url_name': 'reviews'},
-        {'title': "Войти", 'url_name': 'auth'}
-        ]
+        {'title': "Войти", 'url_name': 'auth'}]
 
 
 def pageNotFound(request, exception):
@@ -59,10 +55,14 @@ def pageNotFound(request, exception):
 
 def index(request):
     posts = Menu.objects.all()
+    categorys = Category.objects.all()
+
     context = {
         'posts': posts,
+        'categorys': categorys,
         'menu': menu,
-        'title': 'Главная - ГамарджобаГенацвале'
+        'title': 'Главная - ГамарджобаГенацвале',
+        'category_selected': 0,
     }
     return render(request, 'menu/index.html', context=context)
 
@@ -72,21 +72,11 @@ def auth(request):
 
 
 def legends(request):
-    context ={
+    context = {
         'menu': menu,
         'title': 'Легенда'
     }
     return render(request, 'menu/legends.html', context=context)
-
-
-def menu(request):
-    posts = Menu.objects.all()
-    context = {
-        'posts': posts,
-        'menu': menu,
-        'title': 'Меню'
-    }
-    return render(request, 'menu/index.html', context=context)
 
 
 def contacts(request):
@@ -99,6 +89,25 @@ def reviews(request):
 
 def table_reservation(request):
     return HttpResponse('Бронирование столика')
+
+
+def show_post(request, post_id):
+    return HttpResponse(f'Отображение блюда с id={post_id}')
+
+
+def show_category(request, category_id):
+    posts = Menu.objects.filter(category_id=category_id)
+    categorys = Category.objects.all()
+
+    context = {
+        'posts': posts,
+        'categorys': categorys,
+        'menu': menu,
+        'title': 'Отображение по категориям',
+        'category_selected': category_id,
+    }
+    return render(request, 'menu/index.html', context=context)
+
 
 
 

@@ -3,11 +3,17 @@
 {% block content %}
 <ul class="list-articles">
 {% for p in posts %}
-    <li>
+    <li><div class="'article-panel">
+        <p class="'first">Категория: {{ p.category }}</p>
+    </div>
+{% if p.photo %}
+    <p><img class="img-article-left thumb" src="{{ p.photo.url }}"></p>
+{% endif %}
         <h3>{{ p.name }}</h3>
         <p>{{ p.description }}</p>
-        <p>{{ p.price }}р / {{ p.weight }}гр</p>
+        <p>Цена: {{ p.price }}р / {{ p.weight }}гр</p>
         <div class="clear"></div>
+        <p class="link-read-post"><a href="{% url 'post' p.pk %}">Подробнее</a></p>
     </li>
 {% endfor %}
 </ul>

@@ -17,7 +17,7 @@
 			<li class="logo"><a href="{% url 'home' %}"><div class="logo"></div></a></li>
 {% for m in menu %}
 	{% if not forloop.last %}
-			<li><a href="{% url m.url_name %}">{{m.title}}</a></li>
+			<li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
 	{% else %}
 			<li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
 	{% endif %}
@@ -33,18 +33,19 @@
 <!-- Sidebar слева -->
 	<td valign="top" class="left-chapters">
 	<ul id="leftchapters">
-		<li class="selected">Разделы меню</li>
-		<li><a href="#">Хинкали</a></li>
-		<li><a href="#">Блюда на мангале</a></li>
-		<li><a href="#">Блюда из печи</a></li>
-        <li><a href="#">Горячие блюда</a></li>
-        <li><a href="#">Салаты</a></li>
-        <li><a href="#">Закуски</a></li>
-        <li><a href="#">Супы</a></li>
-        <li><a href="#">Десерты</a></li>
-        <li><a href="#">Гарниры</a></li>
-        <li><a href="#">Соусы</a></li>
-        <li><a href="#">Напитки</a></li>
+        {% if category_selected == 0 %}
+        <li class="selected">Разделы меню</li>
+        {% else %}
+        <li><a href="{% url 'home' %}">Разделы меню</a></li>
+        {% endif %}
+
+    {% for c in categorys %}
+    {% if c.pk == category_selected %}
+    <li class="selected">{{ c.name }}</li>
+    {% else %}
+    <li><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
+    {% endif %}
+    {% endfor %}
 	</ul>
 </td>
 <!-- Конец Sidebar'а -->
