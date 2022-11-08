@@ -1,5 +1,7 @@
+from django.contrib.auth import logout
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
@@ -46,8 +48,8 @@ class CategoryViewSet(ModelViewSet):
 menu = [{'title': "Легенда", 'url_name': 'legends'},
         {'title': "Забронировать стол", 'url_name': 'table_reservation'},
         {'title': "Контакты", 'url_name': 'contacts'},
-        {'title': "Отзывы", 'url_name': 'reviews'},
-        {'title': "Войти", 'url_name': 'auth'}]
+        {'title': "Отзывы", 'url_name': 'reviews'},]
+        # {'title': "Войти", 'url_name': 'auth'}]
 
 
 def pageNotFound(request, exception):
@@ -97,12 +99,27 @@ class ShowPost(DetailView):
         return context
 
 
-def auth(request):
-    context = {
-        'menu': menu,
-        'title': 'Авторизация'
-    }
-    return render(request, 'menu/oauth.html', context=context)
+class Login(LoginView):
+    template_name = 'menu/oauth.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Авторизация'
+        return context
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('auth')
+
+
+# def auth(request):
+#     context = {
+#         'menu': menu,
+#         'title': 'Авторизация'
+#     }
+#     return render(request, 'menu/oauth.html', context=context)
 
 
 def legends(request):

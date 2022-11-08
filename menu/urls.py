@@ -3,7 +3,8 @@ from django.urls import path, re_path
 from .views import *
 
 urlpatterns = [
-    path('auth/', auth, name='auth'),
+    path('auth/', Login.as_view(), name='auth'),
+    path('logout/', logout_user, name='logout'),
     path('legends/', legends, name='legends'),
     path('', MenuHome.as_view(), name='home'),
     path('contacts/', contacts, name='contacts'),
