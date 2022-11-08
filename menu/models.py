@@ -35,3 +35,16 @@ class Category(models.Model):
         verbose_name = "Категория"
         verbose_name_plural = "Категория"
 
+
+class Comment(models.Model):
+    name = models.CharField(max_length=80, verbose_name='Имя')
+    body = models.TextField(verbose_name='Ваш отзыв')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return self.name

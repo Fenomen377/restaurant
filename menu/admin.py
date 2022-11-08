@@ -14,3 +14,8 @@ class MenuAdmin(ModelAdmin):
 class CategoryAdmin(ModelAdmin):
     pass
 
+
+@admin.register(Comment)
+class CommentAdmin(ModelAdmin):
+    pass
+

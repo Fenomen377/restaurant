@@ -2,13 +2,32 @@
 
 {% block content %}
 <h1>{{ title }}</h1>
-<ul>
-{% for p in posts %}
-    <li>
-        <h2>{{ title }}</h2>
-        <p>{{ description }}</p>
-        <hr>
-    </li>
+    {% for comment in comments %}
+    <div class="comment">
+        <p class="info">
+            {{ comment.name }}
+            {{ comment.created }}
+            <div class="clear"></div>
+
+        </p>
+        {{ comment.body|linebreaks }}
+    </div>
+{% empty %}
+    <p>Здесь еще нет отзывов, но вы можете оставить первый.</p>
 {% endfor %}
-</ul>
+{% if new_comment %}
+    <h2>Your comment has been added.</h2>
+{% else %}
+    <h2>Добавить отзыв</h2>
+    <form action="{% url 'reviews' %}" method="post" enctype="multipart/form-data">
+{#        {{ form.as_p }}#}
+        {% csrf_token %}
+        {% for f in form %}
+<p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }} </p>
+<div class="form-error">{{ f.errors }}</div>
+{% endfor %}
+        <p><input type="submit" value="Добавить отзыв"></p>
+    </form>
+{% endif %}
+
 {% endblock %}

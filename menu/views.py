@@ -8,6 +8,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from menu.forms import CommentForm
 from menu.models import *
 from menu.permissions import IsAdminOrReadOnly
 from menu.serializers import *
@@ -114,14 +115,6 @@ def logout_user(request):
     return redirect('auth')
 
 
-# def auth(request):
-#     context = {
-#         'menu': menu,
-#         'title': 'Авторизация'
-#     }
-#     return render(request, 'menu/oauth.html', context=context)
-
-
 def legends(request):
     context = {
         'menu': menu,
@@ -138,12 +131,12 @@ def contacts(request):
     return render(request, 'menu/contacts.html', context=context)
 
 
-def reviews(request):
-    context = {
-        'menu': menu,
-        'title': 'Отзывы'
-    }
-    return render(request, 'menu/reviews.html', context=context)
+# def reviews(request):
+#     context = {
+#         'menu': menu,
+#         'title': 'Отзывы'
+#     }
+#     return render(request, 'menu/reviews.html', context=context)
 
 
 def table_reservation(request):
@@ -152,6 +145,23 @@ def table_reservation(request):
         'title': 'Бронирование столика'
     }
     return render(request, 'menu/table_reservation.html', context=context)
+
+
+def reviews(request):
+
+    comments = Comment.objects.filter(active=True)
+
+    if request.method == 'POST':
+        form = CommentForm(data=request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect('reviews')
+            except:
+                form.add_error(None, 'Ошибка добавления отзыва')
+    else:
+        form = CommentForm()
+    return render(request, 'menu/reviews.html', {'menu': menu, 'title': 'Отзывы', 'comments': comments, 'form': form})
 
 
 
