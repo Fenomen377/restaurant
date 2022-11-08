@@ -7,6 +7,7 @@
 <p><img class="img-article-left" src="{{ post.photo.url }}"></p>
 {% endif %}
 
+    <b>Категория: {{ post.category }}</b>
 {{ post.description|linebreaks }}
-{{ post.price }}p / {{ post.weight }}гр
+Цена: {{ post.price }}p / {{ post.weight }}гр
 {% endblock %}
