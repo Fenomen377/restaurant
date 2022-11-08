@@ -11,7 +11,7 @@
 {% endif %}
         <h3>{{ p.name }}</h3>
         <p>{{ p.description }}</p>
-        <p>Цена: {{ p.price }}р / {{ p.weight }}гр</p>
+        <p>Цена: {{ p.price }} ₽ / {{ p.weight }} г.</p>
         <div class="clear"></div>
         <p class="link-read-post"><a href="{% url 'post' p.pk %}">Подробнее</a></p>
     </li>
