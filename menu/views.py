@@ -27,7 +27,7 @@ class CategoryViewSetPagination(PageNumberPagination):
 
 
 class MenuViewSet(ModelViewSet):
-    queryset = Menu.objects.all()
+    queryset = Menu.objects.all().select_related('category')
     serializer_class = MenuSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['category', 'price']
@@ -69,6 +69,9 @@ class MenuHome(ListView):
         context['category_selected'] = 0
         return context
 
+    def get_queryset(self):
+        return Menu.objects.all().select_related('category')
+
 
 class ShowCategory(ListView):
     model = Menu
@@ -76,13 +79,14 @@ class ShowCategory(ListView):
     context_object_name = 'posts'
 
     def get_queryset(self):
-        return Menu.objects.filter(category__id=self.kwargs['category_id'])
+        return Menu.objects.filter(category__id=self.kwargs['category_id']).select_related('category')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        c = Category.objects.get(id=self.kwargs['category_id'])
         context['menu'] = menu
         context['title'] = 'Категория - ' + str(context['posts'][0].category)
-        context['category_selected'] = context['posts'][0].category_id
+        context['category_selected'] = c.pk
         return context
 
 
