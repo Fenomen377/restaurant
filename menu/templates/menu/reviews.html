@@ -5,19 +5,19 @@
     {% for comment in comments %}
     <div class="comment">
         <p class="info">
-            {{ comment.name }}
+            Гость:
+            {{ comment.name }} |
             {{ comment.created }}
             <div class="clear"></div>
 
         </p>
         {{ comment.body|linebreaks }}
+    _________________________________________________________________________________________________________________
     </div>
 {% empty %}
     <p>Здесь еще нет отзывов, но вы можете оставить первый.</p>
 {% endfor %}
-{% if new_comment %}
-    <h2>Your comment has been added.</h2>
-{% else %}
+    {% if request.user.is_authenticated %}
     <h2>Добавить отзыв</h2>
     <form action="{% url 'reviews' %}" method="post" enctype="multipart/form-data">
 {#        {{ form.as_p }}#}
@@ -28,6 +28,8 @@
 {% endfor %}
         <p><input type="submit" value="Добавить отзыв"></p>
     </form>
+        {% else %}
+        <h3><font color="red"> Чтобы оставить отзыв, вы должны быть авторизованы!</font></h3>
 {% endif %}
 
 {% endblock %}

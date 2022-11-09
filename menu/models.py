@@ -37,8 +37,8 @@ class Category(models.Model):
 
 
 class Comment(models.Model):
-    name = models.CharField(max_length=80, verbose_name='Имя')
-    body = models.TextField(verbose_name='Ваш отзыв')
+    name = models.CharField(max_length=25, verbose_name='Имя')
+    body = models.TextField(max_length=200, verbose_name='Ваш отзыв')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
