@@ -49,8 +49,8 @@ class CategoryViewSet(ModelViewSet):
 menu = [{'title': "Легенда", 'url_name': 'legends'},
         {'title': "Забронировать стол", 'url_name': 'table_reservation'},
         {'title': "Контакты", 'url_name': 'contacts'},
-        {'title': "Отзывы", 'url_name': 'reviews'},]
-        # {'title': "Войти", 'url_name': 'auth'}]
+        {'title': "Отзывы", 'url_name': 'reviews'},
+        {'title': "Для разработчиков", 'url_name': 'api/menu'}]
 
 
 def pageNotFound(request, exception):
@@ -133,6 +133,13 @@ def contacts(request):
         'title': 'Контакты'
     }
     return render(request, 'menu/contacts.html', context=context)
+
+def api(request):
+    context = {
+        'menu': menu,
+        'title': 'Для разработчиков'
+    }
+    return render(request, 'menu/api.html', context=context)
 
 
 # def reviews(request):

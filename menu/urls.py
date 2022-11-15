@@ -7,6 +7,7 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('legends/', legends, name='legends'),
     path('', MenuHome.as_view(), name='home'),
+    path('api/menu', api, name='api/menu'),
     path('contacts/', contacts, name='contacts'),
     path('reviews/', reviews, name='reviews'),
     path('table_reservation/', table_reservation, name='table_reservation'),

@@ -24,8 +24,8 @@ from restaurant import settings
 
 router = SimpleRouter()
 
-router.register(r'api/menu', MenuViewSet)
-router.register(r'api/category', CategoryViewSet)
+router.register(r'api/v1/menu', MenuViewSet)
+router.register(r'api/v1/category', CategoryViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
